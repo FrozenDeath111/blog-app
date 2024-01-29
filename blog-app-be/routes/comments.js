@@ -5,17 +5,18 @@ const {
     deleteComment,
     updateComment
  } = require("../controllers/commentsController");
+ const requireAuth = require('../middleware/requireAuth');
 
-// GET all comments
-router.get("/", createComments);
+// GET blog comments
+router.get("/:id", getComments);
 
 // POST new comments
-router.post("/", getComments);
+router.post("/", requireAuth, createComments);
 
 // DELETE comment
-router.delete("/:id", deleteComment);
+router.delete("/:id", requireAuth, deleteComment);
 
 // UPDATE comment
-router.patch("/:id", updateComment);
+router.patch("/:id", requireAuth, updateComment);
 
 module.exports = router;

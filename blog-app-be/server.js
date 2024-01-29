@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const blogsRoutes = require("./routes/blogs");
 const commentsRoutes = require("./routes/comments");
@@ -11,6 +12,17 @@ const app = express();
 
 // middleware
 app.use(express.json());
+app.use(cors({
+  origin: process.env.FRONT_END_ORIGIN
+}));
+app.options('*',cors());
+var allowCrossDomain = function(req,res,next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, PATCH');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();  
+}
+app.use(allowCrossDomain);
 
 // routes
 app.use("/api/blogs", blogsRoutes);

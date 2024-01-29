@@ -26,11 +26,11 @@ const commentsSchema = new Schema({
     }
 }, { timestamps: true });
 
-commentsSchema.statics.setUUID = async function(userId, title, body) {
+commentsSchema.statics.setUUID = async function(blogId, name, email, body) {
     // creating uuid for comment
     const commentUUID = ~~Date.now();
 
-    const comment = await this.create({userId, id:commentUUID, title, body});
+    const comment = await this.create({blogId, id:commentUUID, name, email, body});
 
     return comment;
 };

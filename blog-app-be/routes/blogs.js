@@ -6,6 +6,10 @@ const {
     deleteBlog,
     updateBlog
  } = require("../controllers/blogsController");
+const requireAuth = require('../middleware/requireAuth');
+
+// auth for all blogs
+// router.use(requireAuth);
 
 // GET all blogs
 router.get("/", getBlogs);
@@ -14,12 +18,12 @@ router.get("/", getBlogs);
 router.get("/:id", getSpecificBlog);
 
 // POST new blog
-router.post("/", createBlogs);
+router.post("/", requireAuth, createBlogs);
 
 // DELETE blog
-router.delete("/:id", deleteBlog);
+router.delete("/:id", requireAuth, deleteBlog);
 
 // UPDATE blog
-router.patch("/:id", updateBlog);
+router.patch("/:id", requireAuth, updateBlog);
 
 module.exports = router;

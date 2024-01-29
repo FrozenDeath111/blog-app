@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 
 // get all comments
 const getComments = async (req, res) => {
-    const comments = await Comments.find({}).sort({createdAt: -1});
+    const {id} = req.params;
+    const comments = await Comments.find({blogId: id}).sort({createdAt: -1});
 
     res.status(200).json(comments);
 }
@@ -14,7 +15,7 @@ const createComments = async (req, res) => {
 
     // create to DB
     try {
-      const comments = await Comments.setUUID({blogId, name, email, body});
+      const comments = await Comments.setUUID(blogId, name, email, body);
       res.status(200).json(comments);
     } catch (error) {
       res.status(400).json({error: error.message});
@@ -50,6 +51,7 @@ const updateComment = async (req, res) => {
         ...req.body
     });
 
+    console.log(comment);
     if(!comment) {
         return res.status(404).json({error: "No such blog exists"});
     }

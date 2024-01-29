@@ -31,7 +31,7 @@ const createBlogs = async (req, res) => {
 
     // create to DB
     try {
-      const blogs = await Blogs.setUUID({userId, title, body});
+      const blogs = await Blogs.setUUID(userId, title, body);
       res.status(200).json(blogs);
     } catch (error) {
       res.status(400).json({error: error.message});
